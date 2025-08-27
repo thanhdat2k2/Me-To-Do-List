@@ -24,12 +24,30 @@
           <i class="fa-solid fa-list-check"></i>
         </div>
 
+        <div class="stats">
+          <div class="stats-left">
+            <h3>KEEP IT UP!</h3>
+            <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+          </div>
+          <div class="counter">
+            <span id="done-count">0</span>/<span id="total-count">0</span>
+          </div>
+        </div>
+
         <form class="input-area">
-          <input type="text" id="task-input" placeholder="Add a new task..." />
+          <input
+            type="text"
+            id="task-input"
+            placeholder="Add a new task..."
+            maxlength="30"
+          />
           <button type="submit" id="add-task-btn">
             <i class="fa-solid fa-plus"></i>
           </button>
         </form>
+        <div class="input-meta">
+          <small id="title-error" class="error-msg" hidden></small>
+        </div>
         <div class="todos-container">
           <ul id="task-list"></ul>
           <img class="empty-image" src="/assets/empty-image.png" alt="empty" />

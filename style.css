@@ -1,3 +1,6 @@
+/* =========================================================
+   0) Fonts & Reset
+========================================================= */
 @import url("https://fonts.googleapis.com/css2?family=Paytone+One&display=swap");
 
 * {
@@ -6,69 +9,80 @@
   box-sizing: border-box;
 }
 
+/* =========================================================
+   1) Theme variables
+========================================================= */
 :root {
   --background-color: #7f9562;
   --container-color: #ccda9c;
   --text-title-color: #373737;
   --background-object: #ede1d6;
   --object-color: #cfaf96;
-  --check-color: ##7bdb7b;
-  --remove-task-color: ##e58e61;
+  --check-color: #7bdb7b;
+  --remove-task-color: #e58e61;
 }
 
+/* =========================================================
+   2) App layout
+========================================================= */
 body {
   font-family: "Paytone One", sans-serif;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: var(--background-color) no-repeat center center/cover;
+  background: var(--background-color) no-repeat center/cover;
 }
 
 .container {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
   padding: 0 20px;
 }
 
 .todo-app {
+  position: relative;
   width: 100%;
   max-width: 400px;
   padding: 2rem;
   display: flex;
-  align-items: center;
-  justify-items: center;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
-  background-color: var(--container-color);
+  background: var(--container-color);
   border-radius: 20px;
   box-shadow: 0 0 100px rgba(59, 60, 59, 0.5);
-  border: 3px solid rgba(255, 255, 255, 0);
+  border: 3px solid transparent;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
+/* =========================================================
+   3) Header
+========================================================= */
 .heading {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
-
 .heading i {
   font-size: 26px;
   margin-left: 10px;
 }
 
+/* =========================================================
+   4) Input area
+========================================================= */
 .input-area {
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100px;
+  justify-content: center;
+  gap: 10px;
 }
-
 .input-area input {
   flex: 1;
   height: 32px;
@@ -80,39 +94,205 @@ body {
   background: var(--background-object);
   color: var(--object-color);
 }
-
 .input-area input::placeholder {
   color: var(--object-color);
 }
-
 .input-area button {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  justify-content: center;
   padding: 8px;
   border-radius: 50%;
-  font-size: 1.1 rem;
+  font-size: 1.1rem;
   background: var(--background-object);
   border: 2px solid rgba(255, 255, 255, 0.18);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
-
 .input-area button:hover {
   transform: scale(1.1);
 }
-
 .input-area button i {
   color: var(--object-color);
 }
 
-.todos-container {
+/* =========================================================
+   5) Stats card
+========================================================= */
+.stats {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--background-object);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.stats-left h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: var(--text-title-color);
+  letter-spacing: 0.5px;
+}
+.bar {
+  width: 200px;
+  height: 20px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--object-color);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+.counter {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #8d7f74;
+  background: #fff;
+  box-shadow: inset 0 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================
+   6) Todos container + empty state
+========================================================= */
+.todos-container {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  display: block; /* overlay empty image dễ căn giữa */
 }
 
 #task-list {
   width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 70%;
+  height: auto;
+  display: none; /* JS toggle */
+  pointer-events: none; /* không chặn click */
+  opacity: 0.9;
+}
+
+/* =========================================================
+   7) Task row (pill + check + actions)
+========================================================= */
+.task {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: var(--background-object);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* chặn tràn con */
+}
+
+.chk {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #fff;
+  color: #fff;
+}
+.chk.done {
+  background: var(--check-color);
+}
+
+.title {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-title-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Popover inline khi hover tiêu đề (hiện trên task, không tràn card) */
+.title:hover {
+  position: absolute;
+  z-index: 10;
+  background: #fff;
+  padding: 2px 4px;
+  border-radius: 6px;
+  white-space: normal;
+  overflow: hidden;
+}
+
+/* =========================================================
+   8) Actions
+========================================================= */
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+.icon-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--object-color);
+  color: #fff;
+}
+.icon-btn.edit {
+  background: var(--object-color);
+}
+.icon-btn.del {
+  background: var(--remove-task-color);
+}
+
+.input-meta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -6px; /* kéo sát lên form cho gọn */
+}
+
+.error-msg {
+  color: #d04545;
+  font-size: 0.85rem;
+}
+.counter-msg {
+  color: #7a7a7a;
+  opacity: 0.9;
+  font-size: 0.85rem;
+}
+
+.input-area input.is-invalid {
+  outline: 2px solid #d04545;
+  background: #fdeeee;
 }
