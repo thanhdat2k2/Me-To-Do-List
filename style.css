@@ -154,12 +154,16 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
   font-weight: 900;
   color: #8d7f74;
   background: #fff;
   box-shadow: inset 0 0 0 6px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
 }
 
 /* =========================================================
@@ -237,14 +241,15 @@ body {
 }
 
 /* Popover inline khi hover tiêu đề (hiện trên task, không tràn card) */
-.title:hover {
+.title.truncated:hover {
   position: absolute;
   z-index: 10;
   background: #fff;
   padding: 2px 4px;
   border-radius: 6px;
-  white-space: normal;
-  overflow: hidden;
+  white-space: normal; /* cho xuống dòng khi hover */
+  overflow: visible;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================================================
