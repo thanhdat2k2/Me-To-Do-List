@@ -32,6 +32,9 @@ function init() {
     // Edit state
     editingLi: null,
     prevBtnIconHTML: null,
+
+    // celebrate when done all
+    fireworksShown: false,
   };
 
   // 1.1) Load từ localStorage
@@ -145,6 +148,63 @@ function updateStats(refs) {
 
   const pct = total ? Math.round((done / total) * 100) : 0;
   if (barFillEl) barFillEl.style.width = pct + "%";
+
+  maybeFireworks(refs, { pct, total, done });
+}
+
+// Chỉ bắn khi 100% & có ít nhất 1 task; reset cờ khi không còn 100%
+function maybeFireworks(refs, { pct, total }) {
+  if (pct === 100 && total > 0) {
+    if (!refs.fireworksShown) {
+      refs.fireworksShown = true;
+      launchFireworks();
+    }
+  } else {
+    refs.fireworksShown = false;
+  }
+}
+
+// Hiệu ứng pháo hoa (canvas-confetti)
+function launchFireworks() {
+  if (typeof confetti !== "function") return; // phòng khi chưa load lib
+
+  const duration = 2.2 * 1000; // 2.2s
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 35, spread: 360, ticks: 90, zIndex: 9999 };
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  const interval = setInterval(function () {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    // 2 luồng bắn từ hai bên, mỗi lần một ít hạt
+    confetti({
+      ...defaults,
+      particleCount: 40,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() * 0.3 + 0.1 },
+    });
+    confetti({
+      ...defaults,
+      particleCount: 40,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() * 0.3 + 0.1 },
+    });
+  }, 180);
+
+  // cú nổ giữa màn để “kết thúc”
+  setTimeout(() => {
+    confetti({
+      ...defaults,
+      particleCount: 180,
+      spread: 70,
+      origin: { y: 0.4 },
+    });
+  }, duration - 200);
 }
 
 function showError(refs, msg) {
