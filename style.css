@@ -301,3 +301,208 @@ body {
   outline: 2px solid #d04545;
   background: #fdeeee;
 }
+
+/* =========================================================
+   9) Responsive (giữ nguyên layout, chỉ scale kích thước)
+   - DÁN CUỐI FILE
+========================================================= */
+
+/* Co giãn nhẹ theo viewport để luôn giống bản gốc */
+.todo-app {
+  max-width: clamp(320px, 92vw, 640px);
+}
+
+/* Thanh tiến độ linh hoạt theo bề ngang, nhưng vẫn như “bản gốc” */
+.stats .bar {
+  width: clamp(160px, 50vw, 360px);
+}
+
+/* -------- iPad dọc & tablet (≤ 1024px) -------- */
+@media (max-width: 1024px) {
+  .todo-app {
+    padding: 2rem;
+    gap: 28px;
+  }
+  .heading h1 {
+    font-size: 1.8rem;
+  }
+
+  .stats {
+    padding: 14px;
+    gap: 12px;
+  }
+  .stats-left h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+  .stats .bar {
+    height: 18px;
+  }
+
+  .counter {
+    width: 64px;
+    height: 64px;
+    font-size: 0.95rem;
+  }
+
+  .input-area input {
+    height: 38px;
+    font-size: 1rem;
+  }
+  .input-area button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .task {
+    padding: 9px 12px;
+    gap: 12px;
+  }
+  .chk,
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* -------- Điện thoại lớn / iPad mini (≤ 768px) -------- */
+@media (max-width: 768px) {
+  .todo-app {
+    padding: 1.75rem;
+    gap: 24px;
+  }
+  .heading h1 {
+    font-size: 1.6rem;
+  }
+
+  .stats {
+    padding: 12px;
+    gap: 10px;
+  }
+  .stats-left h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .stats .bar {
+    height: 16px;
+  }
+
+  .counter {
+    width: 56px;
+    height: 56px;
+    font-size: 0.9rem;
+  }
+
+  .input-area {
+    gap: 8px;
+  }
+  .input-area input {
+    height: 40px;
+    font-size: 1rem;
+  }
+  .input-area button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .task {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+  .title {
+    font-size: 1rem;
+    min-width: 0;
+  } /* giữ ellipsis hoạt động */
+  .chk,
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .empty-image {
+    max-width: 78%;
+  }
+}
+
+/* -------- Điện thoại phổ biến (≤ 480px) -------- */
+@media (max-width: 480px) {
+  .todo-app {
+    padding: 1.5rem;
+    gap: 20px;
+  }
+  .heading h1 {
+    font-size: 1.45rem;
+  }
+
+  .stats-left h3 {
+    font-size: 15px;
+  }
+  .stats .bar {
+    height: 14px;
+  }
+
+  .counter {
+    width: 52px;
+    height: 52px;
+    font-size: 0.85rem;
+  }
+
+  .input-area input {
+    height: 38px;
+    font-size: 0.95rem;
+  }
+  .input-area button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .task {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+  .chk,
+  .icon-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Tooltip khi title dài – không tràn mép màn */
+  .title.truncated:hover {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 92vw;
+  }
+}
+
+/* -------- Màn rất nhỏ (≤ 360px) -------- */
+@media (max-width: 360px) {
+  .todo-app {
+    padding: 1.25rem;
+    gap: 16px;
+  }
+  .heading h1 {
+    font-size: 1.3rem;
+  }
+
+  .counter {
+    width: 48px;
+    height: 48px;
+    font-size: 0.82rem;
+  }
+  .chk,
+  .icon-btn {
+    width: 24px;
+    height: 24px;
+  }
+  .stats .bar {
+    height: 12px;
+  }
+}
+
+/* Giảm chuyển động nếu người dùng chọn */
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill,
+  .input-area button:hover {
+    transition: none;
+  }
+}
