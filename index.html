@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Me To-Do List</title>
 
+    <!-- màu thanh trạng thái -->
+    <meta name="theme-color" content="#7f9562" />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <!-- iOS: cho phép hiển thị như app và icon -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- mới -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- cũ cho iOS -->
+
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
@@ -52,4 +66,15 @@
   </body>
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .then((reg) => console.log("✅ SW registered:", reg))
+          .catch((err) => console.error("❌ SW failed:", err));
+      });
+    }
+  </script>
 </html>
